@@ -1,0 +1,14 @@
+JOBNAME: dvcsgen_rad_0
+PROJECT: clas12
+MAIL: daria@jlab.org
+DISK_SPACE: 12 GB
+MEMORY: 1200 MB
+TIME: 360
+COMMAND: source /group/clas12/packages/setup.csh; module load clas12/pro; /w/work/clas12/daria/dvcsRC/dvcsgen --trig 10000 --nmax 10000 --beam 10.604 --x 0.05 0.85 --q2 1.6 14 --t 0 1.79 --gpd 101 --y 0.15 0.9 --w 3.61 --zpos -3 --zwidth 5 --raster 0.025 --vv2cut 0.3 --delta 0.01 --radgen --writef 2
+OS: centos77
+TRACK: simulation
+INPUT_FILES:
+/w/work/clas12/daria/dvcsRC/_CFF_grid_with_Dterm.data
+SINGLE_JOB: true
+OUTPUT_DATA: dvcsgen1.dat
+OUTPUT_TEMPLATE: /volatile/clas12/daria/gen/dvcsgen_Q2min1.6_0.txt
