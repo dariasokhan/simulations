@@ -1,0 +1,27 @@
+#!/bin/sh
+SHELL=
+OUTPUT="mv nohup.out run.out"
+
+if [ $# != 0 ]
+then
+	if [ "$1" = "-q" ]
+	then
+		shift
+		OUTPUT="rm nohup.out"
+	fi
+
+	if [ -f $1 -a ! -x $1 ]
+	then
+		SHELL=sh
+	fi
+
+	nohup $SHELL $* > nohup.out &
+	sleep 1
+	$OUTPUT
+else
+	echo
+	echo run - Run command or batch job in the background
+	echo
+	echo "Usage: run [-q] command"
+	echo "       run [-q] batchfile"
+fi
