@@ -1,6 +1,35 @@
+/**************************************************/
+/* Macro to create a bunch of Auger submission    */
+/* scripts. Takes the number of jobs to submit as */
+/* option. To run:                                */
+/*                                                */
+/*       root -l                                  */
+/*        [] .L create_job_scripts.C              */
+/*        [] create_job_scripts(N)                */ 
+/*                                                */
+/*  where N is the number of jobs you want.       */
+/*  Will create a submission script per job,      */
+/*  all with a .sub extension.                    */
+/*                                                */
+/*  Next, move them to a separate directory       */
+/*  (or maybe you already created them there),    */
+/*  and run the submission script on that dir:    */
+/*                                                */
+/*  ./submit_jobs.sh scripts_dir                  */ 
+/*                                                */
+/*  This will submit everything in the            */
+/*  scripts_dir, one by one, slowly, so that      */
+/*  the farm doesn't get jammed, and save         */
+/*  confirmation of the submission with an        */
+/*  _auger extension. The script will only submit */ 
+/*  jobs for which no "*_auger" file exists in    */
+/*  the directory, to avoid duplicate             */
+/*  submissions.                                  */
+/*                                                */
+/*  Daria Sokhan                                  */
+/**************************************************/
 
-
-// Possibly the most convoluted and moronic way of doing this, and I would have spent the time better to learn shell scripting, but at least this bitch works.
+// Possibly the most convoluted and moronic way of doing this, and I would have spent the time better to learn shell scripting, but at least this bastard works.
 
 char command1[800];
 char command2[800];
@@ -28,18 +57,9 @@ void create_job_scripts(int Njobs){
     
     sprintf(subname,"/u/home/daria/dvcs_sim/dvcsgen_%d.sub",fileno);  // submission script file
     
-    //    sprintf(ananame,"/w/work/clas12/daria/dvcsRC/dvcsgen --trig 10000 --nmax 10000 --beam 10.200 --x 0.05 0.85 --q2 0.9 14 --t 0 1.79 --gpd 101 --y 0.15 0.9 --w 3.61 --zpos -3 --zwidth 5 --raster 0.025 --weight --vv2cut 0.3 --delta 0.01 --radgen --writef 2");   // generator executable
-
-
-    // sprintf(ananame,"/w/work/clas12/daria/dvcsRC/dvcsgen --trig 10000 --nmax 10000 --beam 10.200 --x 0.05 0.85 --q2 1.6 14 --t 0 1.79 --gpd 101 --y 0.15 0.9 --w 3.61 --zpos -3 --zwidth 5 --raster 0.025");   // norad weighted spring-2019, min Q2 1.6, beam E 10.2      
-
-
-    //sprintf(ananame,"/w/work/clas12/daria/dvcsRC/dvcsgen --trig 10000 --nmax 10000 --beam 10.200 --x 0.05 0.85 --q2 1.6 14 --t 0 1.79 --gpd 101 --y 0.15 0.9 --w 3.61 --zpos -3 --zwidth 5 --raster 0.025 --vv2cut 0.3 --delta 0.01 --radgen --writef 2");   // generator executable  
-
-    // sprintf(ananame,"/w/work/clas12/daria/dvcsRC/dvcsgen --trig 10000 --nmax 10000 --beam 10.604 --x 0.05 0.85 --q2 0.9 14 --t 0 1.79 --gpd 101 --y 0.15 0.9 --w 3.61 --zpos -3 --zwidth 5 --raster 0.025");   // generator executable 
-
     sprintf(ananame,"/w/work/clas12/daria/dvcsRC/dvcsgen --trig 10000 --nmax 10000 --beam 10.604 --x 0.05 0.85 --q2 1.6 14 --t 0 1.79 --gpd 101 --y 0.15 0.9 --w 3.61 --zpos -3 --zwidth 5 --raster 0.025 --vv2cut 0.3 --delta 0.01 --radgen --writef 2");   // generator executable
 
+    // Notes specific to dvcsgen:
     // to save all events with their weight (generate flat), add the --weight option
     // to run for inbending specifically (if accept/reject is used), change q2 range to start at 1.6
     // to use the born cross-section for the accept/reject method, add the --radstable flag
